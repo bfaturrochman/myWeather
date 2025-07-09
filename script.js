@@ -1,17 +1,15 @@
 $(".search-button").on("click", function () {
     // console.log($(".input-keyword").val());
 
+    const APIKey = "624a711ecb1fff04c48850466b61a7d3";
     // cari koordinat kota
     $.ajax({
-        url:
-            "http://api.openweathermap.org/geo/1.0/direct?q=" +
-            $(".input-keyword").val() +
-            "&limit=1&appid=624a711ecb1fff04c48850466b61a7d3",
+        url: `http://api.openweathermap.org/geo/1.0/direct?q=${$(".input-keyword").val()}&limit=1&appid=${APIKey}`,
         success: (result) => {
             result.forEach((m) => {
                 //menampilkan data cuaca
                 $.ajax({
-                    url: `https://api.openweathermap.org/data/2.5/weather?lat=${m.lat}&lon=${m.lon}&appid=624a711ecb1fff04c48850466b61a7d3&units=metric&lang=id`,
+                    url: `https://api.openweathermap.org/data/2.5/weather?lat=${m.lat}&lon=${m.lon}&appid=${APIKey}&units=metric&lang=id`,
                     success: (result) => {
                         let cards = "";
                         const cuaca = result.weather;
@@ -26,7 +24,7 @@ $(".search-button").on("click", function () {
                             
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
-                                    <h4 class="card-title mb-0">${result.name}</h4>
+                                    <h4 class="card-title mb-0">${m.name}</h4>
                                     <small class="text-muted">${result.sys.country}</small>
                                 </div>
                                 <img src="https://openweathermap.org/img/wn/${w.icon}.png" alt="Cuaca" class="weather-icon" />
